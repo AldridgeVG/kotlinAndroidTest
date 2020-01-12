@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         characterData = savedInstanceState?.characterData ?: generateCharacter.generate()
 
         generateButton.setOnClickListener {
-            characterData = generateCharacter.generate()
+            //fetchdata from api
+            characterData = fetchCharacterData()
             displayCharacterData()
         }
 
