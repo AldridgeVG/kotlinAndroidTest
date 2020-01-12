@@ -9,6 +9,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 //serial key
 private const val dataKey = "dataKey"
 
+private var Bundle.characterData
+    get() = getSerializable(dataKey) as generateCharacter.characterData
+    set(value) = putSerializable(dataKey, value)
+
 class MainActivity : AppCompatActivity() {
 
     private var characterData = generateCharacter.generate()
@@ -16,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     //realize serial state save
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable(dataKey,characterData)
+        outState.characterData = characterData
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,12 +28,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //restore serialized data
-        characterData=savedInstanceState?.let{
-            it.getSerializable(dataKey) as generateCharacter.characterData
-        }?:generateCharacter.generate()
+        characterData = savedInstanceState?.characterData ?: generateCharacter.generate()
 
-        generateButton.setOnClickListener{
-            characterData=generateCharacter.generate()
+        generateButton.setOnClickListener {
+            characterData = generateCharacter.generate()
             displayCharacterData()
         }
 
