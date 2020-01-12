@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 
 //serial key
 private const val dataKey = "dataKey"
@@ -31,9 +33,13 @@ class MainActivity : AppCompatActivity() {
         characterData = savedInstanceState?.characterData ?: generateCharacter.generate()
 
         generateButton.setOnClickListener {
-            //fetchdata from api
-            characterData = fetchCharacterData()
-            displayCharacterData()
+
+            //use coroutines to access network api
+            launch(UI){
+                //fetchdata from api
+                characterData = fetchCharacterData().await()
+                displayCharacterData()
+            }
         }
 
         displayCharacterData()
