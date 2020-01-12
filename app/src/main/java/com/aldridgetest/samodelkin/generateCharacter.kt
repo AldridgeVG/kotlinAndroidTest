@@ -1,5 +1,7 @@
 package com.aldridgetest.samodelkin
 
+import java.io.Serializable
+
 private fun <T> List<T>.rand() = shuffled().first()
 
 private fun Int.roll() = (0 until this).map { (1..6).toList().rand() }.sum().toString()
@@ -15,7 +17,7 @@ object generateCharacter {
         val dex: String,
         val wis: String,
         val str: String
-    )
+    ):Serializable
 
     private fun name() = "${firstName.rand()} ${lastName.rand()}"
     private fun race() = listOf("dwarf", "elf", "human").rand()
